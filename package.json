@@ -1,5 +1,5 @@
 {
-  "name": "lesson1",
+  "name": "vue-intro",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,10 +12,13 @@
     "vue": "^2.6.10"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.6.0",
     "@vue/cli-plugin-babel": "^4.0.0",
     "@vue/cli-plugin-eslint": "^4.0.0",
     "@vue/cli-service": "^4.0.0",
     "babel-eslint": "^10.0.3",
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.4",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "vue-template-compiler": "^2.6.10"
@@ -29,7 +32,18 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console": [
+        "error",
+        {
+          "allow": [
+            "debug",
+            "warn",
+            "error"
+          ]
+        }
+      ]
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
