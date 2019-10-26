@@ -1,38 +1,16 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <hello-world :msg="modifiedMessage" @update="update" />
+    <todo-list />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import TodoList from "./components/TodoList";
 
 export default {
-  name: "app",
-
   components: {
-    HelloWorld
-  },
-
-  data: () => ({
-    message: "Добро пожаловать на курс по Vue.js!!!",
-    yourName: ""
-  }),
-
-  computed: {
-    modifiedMessage() {
-      if (this.yourName?.length > 0) {
-        return `${this.yourName}, добро пожаловать на курс по Vue.js!!!`;
-      }
-      return "Добро пожаловать на курс по Vue.js!!!";
-    }
-  },
-
-  methods: {
-    update(_yourName) {
-      this.yourName = _yourName;
-    }
+    TodoList
   }
 };
 </script>
