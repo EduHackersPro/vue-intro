@@ -18,6 +18,7 @@
         <span>Символов осталось: {{ availableTaskTitleLength }}</span>
       </div>
       <div v-show="tasks.length > 0">
+        <!-- TODO: Если нет новых задач, но есть сделанные, то нужно выводить сообщение, что Новых задач нет.  -->
         <h2>Ваши задачи</h2>
         <div class="list-group">
           <a
@@ -33,9 +34,11 @@
       <div v-show="tasks.length === 0">
         <h2>Задач нет</h2>
       </div>
+      <!-- TODO: Показывать только если есть сделанные задачи -->
       <div v-show="tasks.length > 0">
         <h2>Вы сделали</h2>
         <ul class="list-group">
+          <!-- TODO: По клику на сделанную задачу – удалять её из массива задач полностью -->
           <li
             class="list-group-item"
             v-for="(task, index) in doneTasks"
