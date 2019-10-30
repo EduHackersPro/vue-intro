@@ -1,119 +1,51 @@
 <template>
-  <div class="list-view">
-    <div class="container">
-      <h1>Список дел</h1>
-      <div class="form-group">
-        <label for="new-task-title">Что нужно сделать?</label>
-        <input
-          class="form-control"
-          :class="{
-            'is-valid': canCreateTask,
-            'is-invalid': isInvalidNewTitleInput
-          }"
-          type="text"
-          id="new-task-title"
-          v-model="newTaskTitle"
-          @keyup.enter="createTask"
-        />
-        <span>Символов осталось: {{ availableTaskTitleLength }}</span>
-      </div>
-      <div v-show="tasks.length > 0">
-        <h2 v-text="yourTasksTitle"></h2>
-        <div class="list-group">
-          <a
-            class="list-group-item"
-            v-for="(task, index) in undoneTasks"
-            :key="'ti-' + index"
-            v-text="task.title"
-            href="javascript:;"
-            @click="doTask(task)"
-          ></a>
-        </div>
-      </div>
-      <div v-show="tasks.length === 0">
-        <h2>Задач нет</h2>
-      </div>
-      <div v-show="doneTasks.length > 0">
-        <h2>Вы сделали</h2>
-        <ul class="list-group">
-          <li
-            class="list-group-item"
-            v-for="(task, index) in doneTasks"
-            :key="'ti-' + index"
-            v-text="task.title"
-            @click="delTask(task)"
-          ></li>
-        </ul>
-      </div>
+  <div v-show="tasks.length > 0">
+    <h2 v-text="yourTasksTitle"></h2>
+    <div class="list-group" v-show="tasks.length !== 0">
+      <todo-item
+        v-for="(task, index) in tasks"
+        :key="'ti-' + index"
+        :task="task"
+      />
     </div>
   </div>
 </template>
 
 <script>
-const MAX_TASK_TITLE_LENGTH = 100;
+import TodoItem from "./TodoItem";
 
 export default {
-  data: () => ({
-    newTaskTitle: "",
-    tasks: []
-  }),
-
-  computed: {
-    yourTasksTitle() {
-      if (this.undoneTasks.length === 0) {
-        return "Новых задач нет";
+  props: {
+    type: {
+      type: String,
+      required: false,
+      default: "new"
+    },
+    tasks: {
+      type: Array,
+      required: false,
+      default: function() {
+        return [];
       }
-      return "Ваши задачи";
-    },
-
-    undoneTasks() {
-      return this.tasks.filter(task => !task.isDone);
-    },
-
-    doneTasks() {
-      return this.tasks.filter(task => task.isDone);
-    },
-
-    isInvalidNewTitleInput() {
-      return this.newTaskTitle.length > 0 && !this.canCreateTask;
-    },
-
-    availableTaskTitleLength() {
-      const availableLength = MAX_TASK_TITLE_LENGTH - this.newTaskTitle.length;
-      if (availableLength >= 0) {
-        return availableLength;
-      }
-      return 0;
-    },
-
-    canCreateTask() {
-      if (this.newTaskTitle.length > 0 && this.availableTaskTitleLength > 0) {
-        return true;
-      }
-      return false;
     }
   },
 
-  methods: {
-    createTask() {
-      if (!this.canCreateTask) return;
+  components: {
+    TodoItem
+  },
 
-      this.tasks.push({
-        isDone: false,
-        title: this.newTaskTitle
-      });
-      this.newTaskTitle = "";
-    },
-
-    doTask(_task) {
-      _task.isDone = true;
-    },
-
-    delTask(_task) {
-      const index = this.tasks.indexOf(_task);
-      if (index !== -1) {
-        this.tasks.splice(index, 1);
+  computed: {
+    yourTasksTitle() {
+      if (this.type === "new") {
+        if (this.tasks.length === 0) {
+          return "Новых задач нет";
+        }
+        return "Ваши задачи";
       }
+      if (this.type === "done") {
+        return "Выполненные задачи";
+      }
+      return "";
     }
   }
 };
