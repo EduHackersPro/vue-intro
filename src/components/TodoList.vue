@@ -18,8 +18,7 @@
         <span>Символов осталось: {{ availableTaskTitleLength }}</span>
       </div>
       <div v-show="tasks.length > 0">
-        <!-- TODO: Если нет новых задач, но есть сделанные, то нужно выводить сообщение, что Новых задач нет.  -->
-        <h2>Ваши задачи</h2>
+        <h2 v-text="yourTasksTitle"></h2>
         <div class="list-group">
           <a
             class="list-group-item"
@@ -34,16 +33,15 @@
       <div v-show="tasks.length === 0">
         <h2>Задач нет</h2>
       </div>
-      <!-- TODO: Показывать только если есть сделанные задачи -->
-      <div v-show="tasks.length > 0">
+      <div v-show="doneTasks.length > 0">
         <h2>Вы сделали</h2>
         <ul class="list-group">
-          <!-- TODO: По клику на сделанную задачу – удалять её из массива задач полностью -->
           <li
             class="list-group-item"
             v-for="(task, index) in doneTasks"
             :key="'ti-' + index"
             v-text="task.title"
+            @click="delTask(task)"
           ></li>
         </ul>
       </div>
@@ -61,6 +59,13 @@ export default {
   }),
 
   computed: {
+    yourTasksTitle() {
+      if (this.undoneTasks.length === 0) {
+        return "Новых задач нет";
+      }
+      return "Ваши задачи";
+    },
+
     undoneTasks() {
       return this.tasks.filter(task => !task.isDone);
     },
@@ -102,6 +107,13 @@ export default {
 
     doTask(_task) {
       _task.isDone = true;
+    },
+
+    delTask(_task) {
+      const index = this.tasks.indexOf(_task);
+      if (index !== -1) {
+        this.tasks.splice(index, 1);
+      }
     }
   }
 };
