@@ -1,27 +1,77 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <todo-app />
+    <div
+      class="d-flex navbar navbar-dark flex-column flex-md-row align-items-center p-3 px-md-4 bg-dark border-bottom shadow-sm"
+    >
+      <h5 class="my-0 mr-md-auto font-weight-normal">Simple Todo</h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <router-link class="p-2 text-white" to="/">О сервисе</router-link>
+      </nav>
+      <template v-if="isNotLoggedIn">
+        <router-link class="btn btn-link text-white" :to="{ name: 'login' }"
+          >Вход</router-link
+        >
+        <router-link class="btn btn-primary ml-2" :to="{ name: 'signup' }"
+          >Регистрация</router-link
+        >
+      </template>
+      <template v-if="isLoggedIn">
+        <a class="btn btn-link text-white" href="javascript:;" @click="logout"
+          >Выход</a
+        >
+        <router-link class="btn btn-primary ml-2" :to="{ name: 'todo-app' }"
+          >Списки дел</router-link
+        >
+      </template>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import TodoApp from "./components/TodoApp";
-
 export default {
-  components: {
-    TodoApp
+  data: () => ({
+    isLoggedIn: false
+  }),
+
+  computed: {
+    isNotLoggedIn() {
+      return !this.isLoggedIn;
+    }
+  },
+
+  watch: {
+    isLoggedIn: {
+      handler(newVal) {
+        window.localStorage.setItem("isLoggedIn", newVal);
+      },
+      immediate: true
+    }
+  },
+
+  mounted() {
+    window.eventbus.$on("login", () => {
+      this.isLoggedIn = true;
+      this.$router.push("/app");
+    });
+  },
+
+  methods: {
+    logout() {
+      this.isLoggedIn = false;
+    }
   }
 };
 </script>
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+.navbar {
+  color: #fff;
 }
 </style>
