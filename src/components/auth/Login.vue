@@ -11,6 +11,7 @@
       <h1 class="h3 mb-3 font-weight-normal">Вход</h1>
       <label for="inputEmail" class="sr-only">Email</label>
       <input
+        v-model="userEmail"
         type="email"
         id="inputEmail"
         class="form-control"
@@ -55,11 +56,11 @@
 </template>
 
 <script>
-// TODO: Организовать получение введенного емэйла из родительского компонента
-// Подставлять этот емэйл в форму ввода v-model
-// Передавать новое значение email'а в родительский компонент
-// для его последующего сохранения там
+import authMixin from "../../mixins/authMixin";
+
 export default {
+  mixins: [authMixin],
+
   methods: {
     signin() {
       window.eventbus.$emit("login");

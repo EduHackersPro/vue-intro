@@ -22,6 +22,7 @@
       />
       <label for="inputEmail" class="sr-only">Email</label>
       <input
+        v-model="userEmail"
         type="email"
         id="inputEmail"
         class="form-control"
@@ -59,11 +60,11 @@
 </template>
 
 <script>
-// TODO: Организовать получение введенного емэйла из родительского компонента
-// Подставлять этот емэйл в форму ввода v-model
-// Передавать новое значение email'а в родительский компонент
-// для его последующего сохранения там
-export default {};
+import authMixin from "../../mixins/authMixin";
+
+export default {
+  mixins: [authMixin]
+};
 </script>
 
 <style>
