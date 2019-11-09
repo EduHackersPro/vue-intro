@@ -29,36 +29,19 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+import { USER_LOGOUT } from "./store/actions";
+
 export default {
-  data: () => ({
-    isLoggedIn: false
-  }),
-
   computed: {
-    isNotLoggedIn() {
-      return !this.isLoggedIn;
-    }
-  },
-
-  watch: {
-    isLoggedIn: {
-      handler(newVal) {
-        window.localStorage.setItem("isLoggedIn", newVal);
-      },
-      immediate: true
-    }
-  },
-
-  mounted() {
-    window.eventbus.$on("login", () => {
-      this.isLoggedIn = true;
-      this.$router.push("/app");
-    });
+    ...mapGetters(["isLoggedIn", "isNotLoggedIn"])
   },
 
   methods: {
+    ...mapActions([USER_LOGOUT]),
+
     logout() {
-      this.isLoggedIn = false;
+      this[USER_LOGOUT]();
     }
   }
 };

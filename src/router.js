@@ -11,6 +11,8 @@ import Verify from './components/auth/Verify'
 import TodoApp from './components/todo/TodoApp'
 import Error404 from './components/error/Error404'
 
+import store from './store'
+
 const routes = [
   {
     path: '/',
@@ -88,12 +90,14 @@ router.beforeResolve((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.auth)
 
   if (requiresAuth) {
-    const isLoggedIn = window.localStorage.getItem('isLoggedIn')
+    const isLoggedIn = store.getters.isLoggedIn
 
     if (isLoggedIn) {
       next()
+      return
     }
     next('/login')
+    return
   }
 
   next()
