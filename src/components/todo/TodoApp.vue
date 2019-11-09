@@ -25,6 +25,8 @@
 
 <script>
 import TodoList from "./TodoList";
+import { mapMutations } from "vuex";
+import { TODO_ADD_ITEM } from "./../../store/mutations";
 
 const MAX_TASK_TITLE_LENGTH = 100;
 
@@ -34,11 +36,15 @@ export default {
   },
 
   data: () => ({
-    newTaskTitle: "",
-    tasks: []
+    newTaskTitle: ""
+    // tasks: []
   }),
 
   computed: {
+    tasks() {
+      return [].concat(this.$store.state.todo.list);
+    },
+
     yourTasksTitle() {
       if (this.undoneTasks.length === 0) {
         return "Новых задач нет";
@@ -75,21 +81,27 @@ export default {
   },
 
   mounted() {
+    // TODO: уйти от eventbus полностью его удалив
     window.eventbus.$on("todo-item-change", this.changeTask);
   },
 
   methods: {
+    ...mapMutations([TODO_ADD_ITEM]),
+
     createTask() {
       if (!this.canCreateTask) return;
-
-      this.tasks.push({
+      const newTask = {
         isDone: false,
         title: this.newTaskTitle
-      });
+      };
+
+      this[TODO_ADD_ITEM](newTask);
+
       this.newTaskTitle = "";
     },
 
     changeTask(_task) {
+      // TODO: этого здесь быть не должно
       if (!_task.isDone) {
         _task.isDone = true;
       } else {
@@ -98,6 +110,7 @@ export default {
     },
 
     _delTask(_task) {
+      // TODO: этого здесь быть не должно
       const index = this.tasks.indexOf(_task);
       if (index !== -1) {
         this.tasks.splice(index, 1);

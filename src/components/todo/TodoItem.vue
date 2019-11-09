@@ -18,7 +18,9 @@ export default {
 
   methods: {
     doTask() {
+      // TODO: уйти от eventbus на работу со store
       // this.$emit("change", this.task);
+      // TODO: удалить полностью из приложения eventbus
       window.eventbus.$emit("todo-item-change", this.task);
     }
   }
