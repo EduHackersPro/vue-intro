@@ -82,7 +82,7 @@ export default {
 
   mounted() {
     // TODO: уйти от eventbus полностью его удалив
-    window.eventbus.$on("todo-item-change", this.changeTask);
+    // window.eventbus.$on("todo-item-change", this.changeTask);
   },
 
   methods: {
@@ -99,23 +99,6 @@ export default {
 
       this.newTaskTitle = "";
     },
-
-    changeTask(_task) {
-      // TODO: этого здесь быть не должно
-      if (!_task.isDone) {
-        _task.isDone = true;
-      } else {
-        this._delTask(_task);
-      }
-    },
-
-    _delTask(_task) {
-      // TODO: этого здесь быть не должно
-      const index = this.tasks.indexOf(_task);
-      if (index !== -1) {
-        this.tasks.splice(index, 1);
-      }
-    }
   }
 };
 </script>
