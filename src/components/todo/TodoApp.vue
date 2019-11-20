@@ -26,7 +26,7 @@
 <script>
 import TodoList from "./TodoList";
 import { mapMutations } from "vuex";
-import { TODO_ADD_ITEM } from "./../../store/mutations";
+import { TODO_ADD_TASK } from "./../../store/mutations";
 
 const MAX_TASK_TITLE_LENGTH = 100;
 
@@ -86,7 +86,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations([TODO_ADD_ITEM]),
+    ...mapMutations([TODO_ADD_TASK]),
 
     createTask() {
       if (!this.canCreateTask) return;
@@ -95,7 +95,7 @@ export default {
         title: this.newTaskTitle
       };
 
-      this[TODO_ADD_ITEM](newTask);
+      this[TODO_ADD_TASK](newTask);
 
       this.newTaskTitle = "";
     },
