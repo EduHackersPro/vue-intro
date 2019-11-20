@@ -10,6 +10,14 @@ const mutations = {
   [TODO_ADD_ITEM](state, item) {
     state.list.push(item)
   },
+  
+  [TODO_CHANGESTATE_TASK](state, item) {
+    if (!item.isDone) {
+      item.isDone = true;
+    } else {
+      state.list.splice(state.list.indexOf(item), 1);
+    }
+  }
 }
 
 export default { state, mutations }
