@@ -8,6 +8,9 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+import { TODO_CHANGESTATE_TASK } from "../../store/mutations";
+
 export default {
   props: {
     task: {
@@ -17,11 +20,14 @@ export default {
   },
 
   methods: {
+    ...mapMutations([TODO_CHANGESTATE_TASK]),
+    
     doTask() {
       // TODO: уйти от eventbus на работу со store
       // this.$emit("change", this.task);
       // TODO: удалить полностью из приложения eventbus
-      window.eventbus.$emit("todo-item-change", this.task);
+      //window.eventbus.$emit("todo-item-change", this.task);
+      this[TODO_CHANGESTATE_TASK](this.task);
     }
   }
 };

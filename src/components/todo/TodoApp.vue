@@ -26,7 +26,7 @@
 <script>
 import TodoList from "./TodoList";
 import { mapMutations } from "vuex";
-import { TODO_ADD_ITEM } from "./../../store/mutations";
+import { TODO_ADD_TASK } from "./../../store/mutations";
 
 const MAX_TASK_TITLE_LENGTH = 100;
 
@@ -82,11 +82,11 @@ export default {
 
   mounted() {
     // TODO: уйти от eventbus полностью его удалив
-    window.eventbus.$on("todo-item-change", this.changeTask);
+    // window.eventbus.$on("todo-item-change", this.changeTask);
   },
 
   methods: {
-    ...mapMutations([TODO_ADD_ITEM]),
+    ...mapMutations([TODO_ADD_TASK]),
 
     createTask() {
       if (!this.canCreateTask) return;
@@ -95,27 +95,10 @@ export default {
         title: this.newTaskTitle
       };
 
-      this[TODO_ADD_ITEM](newTask);
+      this[TODO_ADD_TASK](newTask);
 
       this.newTaskTitle = "";
     },
-
-    changeTask(_task) {
-      // TODO: этого здесь быть не должно
-      if (!_task.isDone) {
-        _task.isDone = true;
-      } else {
-        this._delTask(_task);
-      }
-    },
-
-    _delTask(_task) {
-      // TODO: этого здесь быть не должно
-      const index = this.tasks.indexOf(_task);
-      if (index !== -1) {
-        this.tasks.splice(index, 1);
-      }
-    }
   }
 };
 </script>
