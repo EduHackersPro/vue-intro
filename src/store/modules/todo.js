@@ -1,4 +1,4 @@
-import { TODO_ADD_ITEM } from '../mutations'
+import { TODO_ADD_TASK, TODO_CHANGESTATE_TASK } from '../mutations'
 
 const state = {
   list: [],
@@ -7,7 +7,7 @@ const state = {
 // TODO: Добавить возможность смены статуса конкретной задачи
 // TODO: Добавить возможность удаления конкретной задачи
 const mutations = {
-  [TODO_ADD_ITEM](state, item) {
+  [TODO_ADD_TASK](state, item) {
     state.list.push(item)
   },
   
