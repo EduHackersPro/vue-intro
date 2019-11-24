@@ -55,16 +55,19 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import authMixin from "../../mixins/authMixin";
-import { USER_AUTH } from "../../store/actions";
+import { mapActions } from 'vuex'
+import authMixin from '../../mixins/authMixin'
+import { USER_AUTH } from '../../store/actions'
 
 export default {
   mixins: [authMixin],
 
-  data: () => ({
-    password: null
-  }),
+  data() {
+    // this доступен и можем дотянуться к props
+    return {
+      password: null,
+    }
+  },
 
   methods: {
     ...mapActions([USER_AUTH]),
@@ -72,12 +75,12 @@ export default {
     async signin() {
       await this[USER_AUTH]({
         email: this.userEmail,
-        password: this.password
-      });
-      this.$router.push("/app");
-    }
-  }
-};
+        password: this.password,
+      })
+      this.$router.push('/app')
+    },
+  },
+}
 </script>
 
 <style>
