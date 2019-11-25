@@ -77,7 +77,7 @@ export default {
         email: this.userEmail,
         password: this.password,
       })
-      this.$router.push('/app')
+      this.$router.push('/todos')
     },
   },
 }

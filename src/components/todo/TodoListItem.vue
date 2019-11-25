@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
-import { TODO_TOGGLE_ITEM, TODO_REMOVE_ITEM } from '../../store/mutations'
+import { mapActions } from 'vuex'
+import { TODO_ITEM_DO } from '../../store/actions'
 
 /**
  * Элемент списка задач
@@ -23,17 +23,13 @@ export default {
   },
 
   methods: {
-    ...mapMutations([TODO_TOGGLE_ITEM, TODO_REMOVE_ITEM]),
+    ...mapActions([TODO_ITEM_DO]),
 
     /**
      * Обработка выполнения или удаления задачи
      */
     doTask() {
-      let action = TODO_REMOVE_ITEM
-      if (!this.task.isDone) {
-        action = TODO_TOGGLE_ITEM
-      }
-      this[action](this.task)
+      this[TODO_ITEM_DO](this.task)
     },
   },
 }

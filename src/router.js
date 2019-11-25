@@ -9,6 +9,7 @@ import Registration from './components/auth/Registration'
 import PasswordReset from './components/auth/PasswordReset'
 import Verify from './components/auth/Verify'
 import TodoApp from './components/todo/TodoApp'
+import TodoOneList from './components/todo/TodoOneList'
 import Error404 from './components/error/Error404'
 
 import store from './store'
@@ -64,9 +65,17 @@ const routes = [
     ],
   },
   {
-    path: '/app',
+    path: '/todos',
     component: TodoApp,
     name: 'todo-app',
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: '/todos/:list',
+    component: TodoOneList,
+    name: 'todo-list',
     meta: {
       auth: true,
     },
