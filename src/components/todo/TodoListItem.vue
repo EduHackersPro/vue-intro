@@ -1,4 +1,7 @@
 <template>
+  <!-- TODO: Переименование элемента -->
+  <!-- TODO: Удаление элемента -->
+  <!-- TODO: Выводить чекбокс состояния элемента -->
   <a
     class="list-group-item"
     v-text="task.title"
@@ -35,5 +38,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

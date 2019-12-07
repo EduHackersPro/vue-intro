@@ -4,6 +4,8 @@
       <h1>
         <small>Список дел</small><br />
         <span v-text="todoList.title"></span>
+        <!-- TODO: возможность переименования списка дел -->
+        <!-- TODO: возможность удаления списка дел -->
       </h1>
       <div class="form-group">
         <label for="new-task-title">Что нужно сделать?</label>
@@ -27,11 +29,11 @@
 </template>
 
 <script>
-import TodoList from './TodoList'
-import { mapMutations, mapGetters } from 'vuex'
-import { TODO_ADD_ITEM } from './../../store/mutations'
+import { mapGetters, mapActions } from 'vuex'
 import store from '../../store'
-import { FETCH_TODO_LIST } from '../../store/actions'
+import { ADD_TOAST_MESSAGE } from 'vuex-toast'
+import { FETCH_TODO_LIST, TODO_ITEM_CREATE } from '../../store/actions'
+import TodoList from './TodoList'
 
 const MAX_TASK_TITLE_LENGTH = 100
 
@@ -112,7 +114,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations([TODO_ADD_ITEM]),
+    ...mapActions([TODO_ITEM_CREATE, ADD_TOAST_MESSAGE]),
 
     /**
      * Создание новой задачи
@@ -120,12 +122,12 @@ export default {
     createTask() {
       if (!this.canCreateTask) return
 
-      const newTask = {
-        isDone: false,
-        title: this.newTaskTitle,
-      }
-
-      this[TODO_ADD_ITEM](newTask)
+      this[TODO_ITEM_CREATE](this.newTaskTitle).then(() => {
+        this[ADD_TOAST_MESSAGE]({
+          text: 'Добавлен новый пункт',
+          type: 'success',
+        })
+      })
 
       this.newTaskTitle = ''
     },

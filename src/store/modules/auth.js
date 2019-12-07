@@ -1,8 +1,9 @@
 import { USER_AUTH, USER_LOGOUT } from '../actions'
-import { DEL_API_TOKEN, SAVE_API_TOKEN } from '../mutations'
+import { DEL_API_TOKEN, SAVE_API_TOKEN, SET_UPDATING } from '../mutations'
 
 const state = {
   api_token: null,
+  updating: false,
 }
 
 const getters = {
@@ -30,6 +31,10 @@ const mutations = {
 
   [DEL_API_TOKEN](state) {
     state.api_token = null
+  },
+
+  [SET_UPDATING](state, updating) {
+    state.updating = updating
   },
 }
 

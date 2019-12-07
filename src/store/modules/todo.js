@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../../api'
 import {
   TODO_ADD_ITEM,
   TODO_REMOVE_ITEM,
@@ -14,10 +14,6 @@ import {
   TODO_LIST_CREATE,
   TODO_LIST_UPDATE,
 } from '../actions'
-
-const api = axios.create({
-  baseURL: 'http://localhost:8000/api/',
-})
 
 /* 
 const lists = [
@@ -54,17 +50,27 @@ const actions = {
     })
   },
 
-  // TODO: Добавить создание нового элемента с синхронизацией на бэке
-  [TODO_ITEM_CREATE](context, payload) {
-    console.debug(context, payload)
+  [TODO_ITEM_CREATE]({ dispatch, state }, title) {
+    const url = `todos/${state.oneList.id}/items`
+    const data = {
+      title,
+    }
+    return api.post(url, data).then(() => {
+      dispatch(FETCH_TODO_LIST, state.oneList.id)
+    })
   },
 
-  // TODO: Добавить создание нового списка дел с синхронизацией на бэке
-  [TODO_LIST_CREATE](context, payload) {
-    console.debug(context, payload)
+  [TODO_LIST_CREATE]({ dispatch }, title) {
+    const url = `todos`
+    const data = {
+      title,
+    }
+    return api.post(url, data).then(() => {
+      dispatch(FETCH_TODO_LISTS)
+    })
   },
 
-  // TODO: Реализовать переименование списка дел с синхронизацией на бэке
+  // TODO: ДЗ5 Реализовать переименование списка дел
   [TODO_LIST_UPDATE](context, payload) {
     console.debug(context, payload)
   },
